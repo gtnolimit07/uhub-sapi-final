@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+		    <db:config name="Database_Config" doc:name="Database Config" doc:id="b174a685-9c9d-46bc-adaf-509c4ab86a7c" >
+		<db:oracle-connection host="${secure::database.uhub.host}" user="${secure::database.uhub.user}" password="${secure::database.uhub.password}" instance="${secure::database.uhub.instance}" port="${secure::database.uhub.port}"/>
+	</db:config>
+	    <http:listener-config name="uhub-sapi-httpListenerConfig" basePath="covid">
+        <http:listener-connection host="0.0.0.0" port="8081" />
+    </http:listener-config>
+    <apikit:config name="uhub-sapi-config" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" api="resource::efc2d87e-eadb-4567-b00b-64af9b6b41d0:uhub-sapi:1.0.5:raml:zip:uhub-sapi.raml" keepApiBaseUri="true" disableValidations="true">
+	</apikit:config>
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="d6c3cd50-f810-4295-aed8-6b92a0e684ef" file="${env}.yaml" key="${enc.key}" />
+	
+	
+</mule>

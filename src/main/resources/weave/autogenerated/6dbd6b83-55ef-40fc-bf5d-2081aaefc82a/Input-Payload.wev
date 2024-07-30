@@ -1,0 +1,5 @@
+%dw 2.0
+
+type auto_6dbd6b83_55ef_40fc_bf5d_2081aaefc82a_Input_Payload = {| caseID: String |} {"mediaType": "application/json",
+"encoding": "UTF-8"}
+

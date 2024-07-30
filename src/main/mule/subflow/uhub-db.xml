@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+	<sub-flow name="get-covid-case-by-nationa-id" doc:id="94ae7cdf-dc74-45bb-8cf6-5c916f02f4d3" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="d198ed68-0d49-43ca-b0bc-a5577c05456c" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId] Start Get Covid Case By National ID Database. payload: #[payload]"/>
+		<db:select doc:name="Select Covid Case by National ID" doc:id="6ecf88cd-838c-470d-acfd-dd5e575e03ab" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT
+	FIRST_NAME,
+	LAST_NAME,
+	NATIONAL_ID_TYPE,
+	PHONE,
+	EMAIL,
+	CASE_TYPE,
+	SOURCE,
+	NATIONAL_ID,
+	DATE_OF_BIRTH,
+	STREET_ADDRESS,
+	CITY,
+	STATE,
+	COUNTRY,
+	POSTAL_CODE,
+	UPDATED,
+	UPDATED_BY,
+	CREATED,
+	CREATED_BY,
+	CASE_ID
+FROM COVID_CASES
+WHERE NATIONAL_ID = :NATIONAL_ID]]></db:sql>
+			<db:input-parameters ><![CDATA[#[payload]]]></db:input-parameters>
+		</db:select>
+		<logger level="INFO" doc:name="Finish Logger" doc:id="8f90d8ce-e6bc-4166-87f3-5bf31aa2fdba" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId] Finish Get Covid Case By National ID Database. payload: #[payload]"/>
+	</sub-flow>
+	<sub-flow name="update-covid-case" doc:id="4dabfc31-9bd2-449b-9379-4c5f5cd449cd" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="804cd343-afcf-4d54-b019-86fd1ef5d9e0" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId] Start Update Covid Case Database. payload: #[payload]"/>
+		<db:update doc:name="Update Covid Case" doc:id="dcb5efe6-94e7-40b5-bef6-aba2e3502384" config-ref="Database_Config" autoGenerateKeys="true">
+			<db:sql ><![CDATA[update COVID_CASES
+set
+	FIRST_NAME = :FIRST_NAME,
+	LAST_NAME = :LAST_NAME,
+	NATIONAL_ID_TYPE = :NATIONAL_ID_TYPE,
+	PHONE = :PHONE,
+	EMAIL = :EMAIL,
+	CASE_TYPE = :CASE_TYPE,
+	SOURCE = :SOURCE,
+	DATE_OF_BIRTH = :DATE_OF_BIRTH,
+	STREET_ADDRESS = :STREET_ADDRESS,
+	CITY = :CITY,
+	STATE = :STATE,
+	COUNTRY = :COUNTRY,
+	POSTAL_CODE = :POSTAL_CODE,
+	UPDATED = :UPDATED,
+	UPDATED_BY = :UPDATED_BY
+where 
+	NATIONAL_ID = :NATIONAL_ID]]></db:sql>
+			<db:input-parameters ><![CDATA[#[payload]]]></db:input-parameters>
+			<db:auto-generated-keys-column-names >
+				<db:auto-generated-keys-column-name value="CASE_ID" />
+			</db:auto-generated-keys-column-names>
+		</db:update>
+		<logger level="INFO" doc:name="Finish Logger" doc:id="18cf3303-8428-4b4a-afbf-c97df2acea5b" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId] Finish Update Covid Case Database. payload: #[payload]"/>
+	</sub-flow>
+	<sub-flow name="insert-covid-case" doc:id="ae3eb5ee-b0b5-477f-b90f-c43b8b927f2f" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="0d439ee0-f920-45db-aafa-58d28b43b451" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId] Start Register Covid Case Database. payload: #[payload]"/>
+		<db:insert doc:name="Insert covid case" doc:id="4aef595a-a1cd-45f5-8d84-acc0ce34725a" config-ref="Database_Config" queryTimeout="60000" queryTimeoutUnit="MILLISECONDS" autoGenerateKeys="true">
+			<reconnect blocking="false"/>
+			<db:sql ><![CDATA[insert into COVID_CASES
+(
+	CREATED_BY,PHONE,STATE,UPDATED,LAST_NAME,EMAIL,FIRST_NAME,CASE_TYPE,CREATED,NATIONAL_ID,CITY,COUNTRY,NATIONAL_ID_TYPE,POSTAL_CODE,SOURCE,STREET_ADDRESS,UPDATED_BY,DATE_OF_BIRTH
+) 
+values 
+(
+	:CREATED_BY,:PHONE,:STATE,:UPDATED,:LAST_NAME,:EMAIL,:FIRST_NAME,:CASE_TYPE,:CREATED,:NATIONAL_ID,:CITY,:COUNTRY,:NATIONAL_ID_TYPE,:POSTAL_CODE,:SOURCE,:STREET_ADDRESS,:UPDATED_BY,:DATE_OF_BIRTH
+)]]></db:sql>
+			<db:input-parameters ><![CDATA[#[payload]]]></db:input-parameters>
+			<db:auto-generated-keys-column-names >
+				<db:auto-generated-keys-column-name value="CASE_ID" />
+			</db:auto-generated-keys-column-names>
+		</db:insert>
+		<logger level="INFO" doc:name="Finish Logger" doc:id="d4cc2ffb-a82d-4f13-b02f-2435dcd9f895" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId] Finish Register Covid Case Database. payload: #[payload]"/>
+	
+</sub-flow>
+	<sub-flow name="fetch-covid-reports" doc:id="74638602-e0d3-420f-8d87-88a656140793" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="76c3814b-dfec-47cf-b7d2-280f3ff233a9" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId] Start Fetch Covid Reports. payload: #[payload]" />
+		<choice doc:name="Choice" doc:id="e29b97a8-2a19-4dd8-8a7c-a429059dae6d" >
+			<when expression="!isEmpty(attributes.queryParams.state)">
+				<db:select doc:name="Select by State" doc:id="9847742f-f2ad-4555-996f-f521f770fb1c" config-ref="Database_Config">
+			<db:sql><![CDATA[SELECT count(*) as count, CASE_TYPE, STATE FROM COVID_CASES WHERE STATE = :STATE group by case_type, state]]></db:sql>
+			<db:input-parameters><![CDATA[#[STATE: attributes.queryParams.state]]]></db:input-parameters>
+		</db:select>
+			</when>
+			<otherwise >
+				<db:select doc:name="Select All" doc:id="82c1ee6f-bff4-4ccd-8c70-0168129d0560" config-ref="Database_Config">
+			<db:sql><![CDATA[SELECT count(*) as count, CASE_TYPE, STATE FROM COVID_CASES group by case_type, state]]></db:sql>
+		</db:select>
+			</otherwise>
+		</choice>
+		<logger level="INFO" doc:name="Finish Logger" doc:id="55aeba31-7da2-470c-9df9-d1ce17f1b7d1" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId] Finish Fetch Covid Reports. payload: #[payload]" />
+	</sub-flow>
+	
+	
+</mule>

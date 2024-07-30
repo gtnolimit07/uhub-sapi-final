@@ -1,0 +1,11 @@
+%dw 2.0
+
+type auto_74638602_e0d3_420f_8d87_88a656140793_Output_Payload = Array<{|  COUNT?: Number,   CASE_TYPE: String,   STATE: String|}> | Array<{ _?: java_lang_Object {"class": "java.lang.Object",
+  "typeAlias": "Object",
+  "typeId": "java.lang.Object"} }>
+type java_lang_Object = {|  |} {"class": "java.lang.Object",
+"typeAlias": "Object",
+"typeId": "java.lang.Object"}
+
+
+

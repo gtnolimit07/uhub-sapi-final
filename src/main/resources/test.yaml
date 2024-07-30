@@ -1,0 +1,10 @@
+http:
+  port:"8081"
+  
+database:
+  uhub:
+    host: "localhost"
+    port: "1521"
+    user: "System"
+    password: "![gRhl5Aa4Ru78ADLPGrdfUw==]"
+    instance: "XE"

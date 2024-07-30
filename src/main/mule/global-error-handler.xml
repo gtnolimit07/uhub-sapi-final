@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<error-handler name="global-error-handler" doc:id="50bbf3d3-aded-40ae-bf5d-0a1ccd325ed9" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate Bad Request" doc:id="490c2365-d993-4134-8cc9-3e1450303bf1" type="APIKIT:BAD_REQUEST" >
+			<ee:transform doc:name="Transform Message" doc:id="5adcc980-163e-45ac-92ec-f7ea7f9034cc" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "code":400,
+  "message":"Bad request",
+  "description":"required key caseType not found",
+  "dateTime": now() as String {format: "yyyy-MM-dd'T'hh:mm:ss'Z'"},
+  "transactionId": vars.transactionId
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[400]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate Not Found" doc:id="300fea6e-f713-48e5-ae11-1ad9eb3efc04" type="APIKIT:NOT_FOUND" >
+			<ee:transform doc:name="Transform Message" doc:id="eb1afaa0-14da-451d-bb69-e6ea691b52f1" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "code":400,
+  "message":"Bad request",
+  "description":"required key caseType not found",
+  "dateTime": now() as String {format: "yyyy-MM-dd'T'hh:mm:ss'Z'"},
+  "transactionId": vars.transactionId
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[400]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate Not Alloawed" doc:id="bf1dce5c-fe39-4e54-99af-1ab29ecc3cae" type="APIKIT:METHOD_NOT_ALLOWED" >
+			<ee:transform doc:name="Transform Message" doc:id="b67cb67b-1d35-4559-ac0d-3dccfe8d673b" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "code":400,
+  "message":"Bad request",
+  "description":"required key caseType not found",
+  "dateTime": now() as String {format: "yyyy-MM-dd'T'hh:mm:ss'Z'"},
+  "transactionId": vars.transactionId
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[400]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate Not Acceptable" doc:id="e166bb57-dbfc-4d48-bac7-77ba09b6da2e" type="APIKIT:NOT_ACCEPTABLE" >
+			<ee:transform doc:name="Transform Message" doc:id="00503e63-9249-47c3-8f92-bbd52912aa48" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "code":400,
+  "message":"Bad request",
+  "description":"required key caseType not found",
+  "dateTime": now() as String {format: "yyyy-MM-dd'T'hh:mm:ss'Z'"},
+  "transactionId": vars.transactionId
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[400]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate Unsupported Medea Type" doc:id="998c432e-2851-42d4-9cce-0f15bbf8d232" type="APIKIT:UNSUPPORTED_MEDIA_TYPE" >
+			<ee:transform doc:name="Transform Message" doc:id="862b2ffc-9f93-4787-b118-97f8e479a3f8" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "code":400,
+  "message":"Bad request",
+  "description":"required key caseType not found",
+  "dateTime": now() as String {format: "yyyy-MM-dd'T'hh:mm:ss'Z'"},
+  "transactionId": vars.transactionId
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[400]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate Not Implemented" doc:id="20d2f943-51ff-437f-882e-08d236ddf307" type="APIKIT:NOT_IMPLEMENTED" >
+			<ee:transform doc:name="Transform Message" doc:id="2fc9a83e-4fb6-4cfe-96e6-508d459bbe3f" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "code":400,
+  "message":"Bad request",
+  "description":"required key caseType not found",
+  "dateTime": now() as String {format: "yyyy-MM-dd'T'hh:mm:ss'Z'"},
+  "transactionId": vars.transactionId
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[400]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ad5ea86d-b6d8-40da-b5ee-0268b87d0a34" type="DB:CONNECTIVITY" >
+			<ee:transform doc:name="Transform Message" doc:id="bfa9b509-15b6-4f4d-816e-3d9cbd255f49" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "code":500,
+  "message":"Internal server error",
+  "description":"The server encountered an unexpected condition which prevented it from fulfilling the request",
+  "dateTime": now() as String {format: "yyyy-MM-dd'T'hh:mm:ss'Z'"},
+  "transactionId": vars.transactionId
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[500]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate Any" doc:id="93486a31-b930-402b-94f8-51a749a6165c" type="ANY">
+			<ee:transform doc:name="Transform Message" doc:id="1a8e4afa-6212-4ace-b04e-e15f6ba8f50e" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "code":500,
+  "message":"Service unavailable",
+  "description":"The (upstream) service is temporarily   not available",
+  "dateTime": now() as String {format: "yyyy-MM-dd'T'hh:mm:ss'Z'"},
+  "transactionId": vars.transactionId
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="httpStatus" ><![CDATA[503]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+	</error-handler>
+</mule>
